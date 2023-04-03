@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "ProductsApplication",
+            "request": "launch",
+            "mainClass": "com.ecom_fin.products.ProductsApplication",
+            "projectName": "Products"
+        },
+        {
+            "type": "java",
+            "name": "ProductsApplication",
+            "request": "launch",
+            "mainClass": "com.ecom_fin.products.Products.ProductsApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-CustomerProjectApplication<CustomerProject>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.ecom_fin.customer.CustomerProjectApplication",
+            "projectName": "CustomerProject",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
