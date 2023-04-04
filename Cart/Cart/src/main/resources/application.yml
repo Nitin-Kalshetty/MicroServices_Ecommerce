@@ -6,3 +6,5 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: microservices
+  application:
+      name: CART_SERVICE
