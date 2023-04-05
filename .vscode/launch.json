@@ -2,6 +2,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ServiceRegistryApplication",
+            "request": "launch",
+            "mainClass": "com.ecom_fin.serviceRegistry.ServiceRegistryApplication",
+            "projectName": "ServiceRegistry"
+        },
+        {
+            "type": "java",
+            "name": "CartApplication",
+            "request": "launch",
+            "mainClass": "com.ecom_fin.cart.CartApplication",
+            "projectName": "Cart"
+        },
+        {
+            "type": "java",
             "name": "ProductsApplication",
             "request": "launch",
             "mainClass": "com.ecom_fin.products.ProductsApplication",

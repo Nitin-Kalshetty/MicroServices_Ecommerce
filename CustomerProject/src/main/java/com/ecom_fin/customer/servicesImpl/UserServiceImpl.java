@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
     public User getUser(String userId) {
         // return userRepo.findById(userId);
         User user = userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
-        ArrayList<Cart> forObject = restTemplate.getForObject("http://localhost:8883/carts/"+userId, ArrayList.class);
+        ArrayList<Cart> forObject = restTemplate.getForObject("http://CART_SERVICE/carts/"+userId, ArrayList.class);
         logger.info("{}",forObject);
         user.setCart(forObject);
         return user;

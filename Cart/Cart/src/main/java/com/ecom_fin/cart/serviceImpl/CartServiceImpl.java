@@ -33,22 +33,31 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Cart getCartByUserId(String userId) {
-		return cartRepository.findByUserId(userId);
-		
+		List<Cart> carts = cartRepository.findByUserId(userId);
+		if(carts.isEmpty()) {
+			throw new CartException("there is userWith this Id : "+userId);
+		}
+		return carts.get(0);
 	}
 
 	@Override
 	public Cart addProductToCart(String userId,String productId) {
-		Cart cart = cartRepository.findByUserId(userId);
-		if(cart==null) {
+		System.out.println(userId+" : userid: " +productId+" :productId: ");
+		List<Cart> cart1 = cartRepository.findByUserId(userId);
+		System.out.println(cart1);
+		if(cart1.isEmpty()) {
 			throw new CartException("Not a valid userId...");
 		}
+		Cart cart = cart1.get(0);
+		System.out.println(cart);
 		boolean checkingIsProductAlreadyPresent = cart.getProducts().stream()
 				.anyMatch(pro -> pro.getProductId().equals(productId));
+		System.out.println(checkingIsProductAlreadyPresent);
 		if(checkingIsProductAlreadyPresent) {
 			throw new CartException("Already this product is in cart So please if want another product you can add quantity.");
 		}
-		Product product = restTemplate.getForObject("http://localhost:8882/product/"+productId, Product.class);	
+		Product product = restTemplate.getForObject("http://PRODUCT_SERVICE/product/"+productId, Product.class);	
+		System.out.println(product);
 		cart.getProducts().add(product);
 		return cartRepository.save(cart);
 		
@@ -56,10 +65,11 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Cart removeProductFromCart(String userId,String productId) {
-		Cart cart = cartRepository.findByUserId(userId);
-		if(cart==null) {
+		List<Cart> cart1 = cartRepository.findByUserId(userId);
+		if(cart1.isEmpty()) {
 			throw new CartException("Not a valid userId...");
 		}
+		Cart cart = cart1.get(0);
 		boolean removed = cart.getProducts().removeIf((product) -> product.getProductId()==productId);
 		if(removed) {
 			throw new CartException("No product available to remove. Its invalid way to remove.");

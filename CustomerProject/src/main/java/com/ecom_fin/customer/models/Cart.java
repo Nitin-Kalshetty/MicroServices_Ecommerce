@@ -1,5 +1,6 @@
 package com.ecom_fin.customer.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -15,6 +16,6 @@ public class Cart {
 	
 	private String cartId;
 	private String userId;
-	private List<Product> products;
+	private List<Product> products = new ArrayList<>();
 
 }
