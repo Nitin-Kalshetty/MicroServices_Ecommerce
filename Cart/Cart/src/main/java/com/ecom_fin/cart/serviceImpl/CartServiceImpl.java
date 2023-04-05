@@ -3,6 +3,7 @@ package com.ecom_fin.cart.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -33,31 +34,30 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Cart getCartByUserId(String userId) {
-		List<Cart> carts = cartRepository.findByUserId(userId);
-		if(carts.isEmpty()) {
+		Cart cart = cartRepository.findByUserId(userId);
+		if(cart==null) {
 			throw new CartException("there is userWith this Id : "+userId);
 		}
-		return carts.get(0);
+		return cart;
 	}
 
 	@Override
 	public Cart addProductToCart(String userId,String productId) {
-		System.out.println(userId+" : userid: " +productId+" :productId: ");
-		List<Cart> cart1 = cartRepository.findByUserId(userId);
-		System.out.println(cart1);
-		if(cart1.isEmpty()) {
+		Cart cart = cartRepository.findByUserId(userId);
+		if(cart==null) {
 			throw new CartException("Not a valid userId...");
 		}
-		Cart cart = cart1.get(0);
-		System.out.println(cart);
+
 		boolean checkingIsProductAlreadyPresent = cart.getProducts().stream()
 				.anyMatch(pro -> pro.getProductId().equals(productId));
 		System.out.println(checkingIsProductAlreadyPresent);
 		if(checkingIsProductAlreadyPresent) {
 			throw new CartException("Already this product is in cart So please if want another product you can add quantity.");
 		}
-		Product product = restTemplate.getForObject("http://PRODUCT_SERVICE/product/"+productId, Product.class);	
-		System.out.println(product);
+		 ResponseEntity<Product> productResp = restTemplate.getForEntity((String) ("http://PRODUCT_SERVICE/products/"+productId), Product.class);
+		 Product product = productResp.getBody();
+		// Product product1 = restTemplate.getForObject("http://PRODUCT_SERVICE/product/"+productId, Product.class);	
+		// System.out.println(product);
 		cart.getProducts().add(product);
 		return cartRepository.save(cart);
 		
@@ -65,11 +65,10 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Cart removeProductFromCart(String userId,String productId) {
-		List<Cart> cart1 = cartRepository.findByUserId(userId);
-		if(cart1.isEmpty()) {
+		Cart cart = cartRepository.findByUserId(userId);
+		if(cart==null) {
 			throw new CartException("Not a valid userId...");
 		}
-		Cart cart = cart1.get(0);
 		boolean removed = cart.getProducts().removeIf((product) -> product.getProductId()==productId);
 		if(removed) {
 			throw new CartException("No product available to remove. Its invalid way to remove.");

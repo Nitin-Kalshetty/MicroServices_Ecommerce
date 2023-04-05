@@ -14,17 +14,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product {
-	    private String productId;
-	    
-	    private String name;
-	    
-	    private String category;
+	private String productId;
 
-	    private Integer price;
+    private String name;
 
-	    private Integer stock;
+    
+    private String category;
 
-	    private String description;
+    private Integer price;
 
-	    private LocalDateTime product_added;
+    private Integer stock;
+
+    private String description;
+
+    private LocalDateTime product_added;
 }

@@ -1,6 +1,5 @@
 package com.ecom_fin.customer.servicesImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,9 +45,19 @@ public class UserServiceImpl implements UserService{
     public User getUser(String userId) {
         // return userRepo.findById(userId);
         User user = userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
-        ArrayList<Cart> forObject = restTemplate.getForObject("http://CART_SERVICE/carts/"+userId, ArrayList.class);
+
+        try{
+        Cart forObject = restTemplate.getForObject("http://CART_SERVICE/carts/"+userId, Cart.class);
         logger.info("{}",forObject);
-        user.setCart(forObject);
+        if(forObject!=null){
+            user.setCart(forObject);
+        }
+        }catch(Exception e){
+            System.out.println("Not added any products to cart...");
+        }
+
+        
+       
         return user;
     }
     

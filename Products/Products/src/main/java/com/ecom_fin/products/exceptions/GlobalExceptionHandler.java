@@ -21,4 +21,13 @@ public class GlobalExceptionHandler {
         map.put("timeStamp",LocalDateTime.now());
         return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
     } 
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String,Object>> ExceptionHandler(Exception pe,WebRequest wr){
+        Map map = new HashMap<>();
+        map.put("message",pe.getMessage());
+        map.put("details",wr.getDescription(false));
+        map.put("timeStamp",LocalDateTime.now());
+        return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
+    }
 }

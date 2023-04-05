@@ -26,8 +26,8 @@ public class Product {
 
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    
+    private String category;
 
     private Integer price;
 
