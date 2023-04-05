@@ -1,10 +1,6 @@
-package com.ecom_fin.cart.models;
-
+package com.ecom_fin.customer.models;
 
 import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,11 +11,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
 public class Cart {
-
-	@Id
+	
 	private String cartId;
 	private String userId;
 	private List<Product> products;
+
 }

@@ -3,6 +3,7 @@ package com.ecom_fin.cart.services;
 import java.util.List;
 
 import com.ecom_fin.cart.models.Cart;
+import com.ecom_fin.cart.models.Product;
 
 public interface CartService {
 
@@ -11,5 +12,9 @@ public interface CartService {
 	List<Cart> getAllCarts();
 	
 	List<Cart> getCartByUserId(String userId);
+	
+	List<Cart> addProductToCart(String productId);
+	
+	List<Cart> removeProductFromCart(String productId);
 	
 }

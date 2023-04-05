@@ -1,7 +1,8 @@
 package com.ecom_fin.products.enums;
 
 public enum Category {
-    ELECTRONICS,
+
+	ELECTRONICS,
     ELECTRICAL,
     FASHION,
     BOOKS,
