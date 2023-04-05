@@ -10,6 +10,6 @@ import com.ecom_fin.cart.models.Cart;
 @Repository
 public interface CartRepository extends MongoRepository<Cart, String>{
 
-	List<Cart> findByUserId(String userId);
+	Cart findByUserId(String userId);
 	
 }

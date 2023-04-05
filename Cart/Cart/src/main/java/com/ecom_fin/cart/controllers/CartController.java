@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom_fin.cart.models.Cart;
@@ -33,7 +34,17 @@ public class CartController {
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<List<Cart>> getCartByUserId(@PathVariable String userId){
-		return new ResponseEntity<List<Cart>>(cartService.getCartByUserId(userId),HttpStatus.ACCEPTED);
+	public ResponseEntity<Cart> getCartByUserIdControllerHandler(@PathVariable String userId){
+		return new ResponseEntity<Cart>(cartService.getCartByUserId(userId),HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/add")
+	public ResponseEntity<Cart> addProductToCartControllerHandler(@RequestParam String userId,@RequestParam String productId){
+		return new ResponseEntity<>(cartService.addProductToCart(userId, productId),HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/delete")
+	public ResponseEntity<Cart> removeProductFromCartControllerHandler(@RequestParam String userId,@RequestParam String productId){
+		return new ResponseEntity<>(cartService.removeProductFromCart(userId, productId),HttpStatus.ACCEPTED);
 	}
 }
