@@ -33,5 +33,5 @@ public class User {
     private String password;
     
     @Transient
-    private Cart cart = new Cart();
+    private Cart cart;
 }

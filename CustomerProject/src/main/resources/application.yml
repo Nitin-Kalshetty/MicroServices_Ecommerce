@@ -1,31 +1,67 @@
   server:
     port: 8881
     
-
+  
   spring:
+    application:
+      name: USER-SERVICE
     datasource:
       url: jdbc:mysql://localhost:3306/microservices
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
-    application:
-      name: USER-SERVICE
-
-
     jpa:
       hibernate:
         ddl-auto: update
       show-sql: true
+    config:
+      import: configserver:http://localhost:8885
     
 
-  eureka:
-    instance:
-      prefer-ip-address: true
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http//localhost:8761/eureka
+
+
+  management:
+    health:
+      circuitbreakers:
+        enabled: true
+    endpoints:
+      web:
+        exposure:
+          include: health
+          
+    endpoint:
+      health:
+        show-details: always
+
+
+
+  resilience4j:
+    circuitbreaker:
+      instances:
+        CB-CART-PRODUCT:
+          register-health-indicator: true
+          event-consumer-buffer-size: 10
+          failure-rate-threshold: 50
+          minimum-number-of-calls: 5
+          automatic-transition-from-open-to-half-open-enabled: true
+          wait-duration-in-open-state: 5s
+          permitted-number-of-calls-in-half-open-state: 3
+          sliding-window-size: 10
+          sliding-window-type: count-based
+
+
+
+
+
+
+#  eureka:
+#    instance:
+#      prefer-ip-address: true
+#    client:
+#      fetch-registry: true
+#      register-with-eureka: true
+#      service-url:
+#        defaultZone: http//localhost:8761/eureka
       
   
   

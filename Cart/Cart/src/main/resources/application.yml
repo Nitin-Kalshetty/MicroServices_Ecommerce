@@ -2,23 +2,27 @@ server:
   port: 8883
 
 spring:
+  application:
+      name: CART-SERVICE
   data:
     mongodb:
       uri: mongodb://localhost:27017
       database: microservices
-  application:
-      name: CART-SERVICE
-
-
-
-
-
-eureka:
-    instance:
-      prefer-ip-address: true
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http//localhost:8761/eureka
+      
+  config:
+      import: configserver:http://localhost:8885
   
+
+
+
+#
+#
+#eureka:
+#    instance:
+#      prefer-ip-address: true
+#    client:
+#      fetch-registry: true
+#      register-with-eureka: true
+#      service-url:
+#        defaultZone: http//localhost:8761/eureka
+#  

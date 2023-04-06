@@ -37,6 +37,10 @@ public class UserServiceImpl implements UserService{
     public User saveUser(User user) {
         String randUID = UUID.randomUUID().toString();
         user.setUserId(randUID);
+        Cart cart = new Cart();
+        cart.setUserId(randUID);
+        Cart added_cart = cartService.addCart(cart);
+        user.setCart(added_cart);
         return userRepo.save(user);
     }
 
