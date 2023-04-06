@@ -9,7 +9,7 @@
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
     application:
-      name: USER_SERVICE
+      name: USER-SERVICE
 
 
     jpa:
@@ -25,7 +25,8 @@
       fetch-registry: true
       register-with-eureka: true
       service-url:
-        defaultZone : http://localhost:8761/eureka
+        defaultZone: http//localhost:8761/eureka
+      
   
   
   

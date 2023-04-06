@@ -36,7 +36,7 @@ public class CartServiceImpl implements CartService{
 	public Cart getCartByUserId(String userId) {
 		Cart cart = cartRepository.findByUserId(userId);
 		if(cart==null) {
-			throw new CartException("there is userWith this Id : "+userId);
+			throw new CartException("there is no user with this Id : "+userId);
 		}
 		return cart;
 	}
@@ -54,7 +54,7 @@ public class CartServiceImpl implements CartService{
 		if(checkingIsProductAlreadyPresent) {
 			throw new CartException("Already this product is in cart So please if want another product you can add quantity.");
 		}
-		 ResponseEntity<Product> productResp = restTemplate.getForEntity((String) ("http://PRODUCT_SERVICE/products/"+productId), Product.class);
+		 ResponseEntity<Product> productResp = restTemplate.getForEntity("http://PRODUCT-SERVICE/products/"+productId, Product.class);
 		 Product product = productResp.getBody();
 		// Product product1 = restTemplate.getForObject("http://PRODUCT_SERVICE/product/"+productId, Product.class);	
 		// System.out.println(product);
@@ -69,8 +69,8 @@ public class CartServiceImpl implements CartService{
 		if(cart==null) {
 			throw new CartException("Not a valid userId...");
 		}
-		boolean removed = cart.getProducts().removeIf((product) -> product.getProductId()==productId);
-		if(removed) {
+		boolean removed = cart.getProducts().removeIf((product) -> product.getProductId().equals(productId));
+		if(!removed) {
 			throw new CartException("No product available to remove. Its invalid way to remove.");
 		}
 		return cartRepository.save(cart);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecom_fin.customer.execptions.UserException;
+import com.ecom_fin.customer.external.services.CartService;
 import com.ecom_fin.customer.models.Cart;
 import com.ecom_fin.customer.models.User;
 import com.ecom_fin.customer.repositories.UserRepository;
@@ -22,6 +23,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepo;
+
+    @Autowired
+    private CartService cartService;
     
     
     @Autowired
@@ -45,13 +49,27 @@ public class UserServiceImpl implements UserService{
     public User getUser(String userId) {
         // return userRepo.findById(userId);
         User user = userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
+        
+        // using REST TEMPLATE
 
+        // try{
+        // Cart forObject = restTemplate.getForObject("http://CART_SERVICE/carts/"+userId, Cart.class);
+        // logger.info("{}",forObject);
+        // if(forObject!=null){
+        //     user.setCart(forObject);
+        // }
+        // }catch(Exception e){
+        //         System.out.println("Not added any products to cart...");
+        // }
+        
+        
+                
+
+        // USING FEIGN CLIENT
+        
         try{
-        Cart forObject = restTemplate.getForObject("http://CART_SERVICE/carts/"+userId, Cart.class);
-        logger.info("{}",forObject);
-        if(forObject!=null){
-            user.setCart(forObject);
-        }
+        Cart cart =  cartService.getCartByUserId(userId);
+        user.setCart(cart);
         }catch(Exception e){
             System.out.println("Not added any products to cart...");
         }

@@ -7,4 +7,18 @@ spring:
       uri: mongodb://localhost:27017
       database: microservices
   application:
-      name: CART_SERVICE
+      name: CART-SERVICE
+
+
+
+
+
+eureka:
+    instance:
+      prefer-ip-address: true
+    client:
+      fetch-registry: true
+      register-with-eureka: true
+      service-url:
+        defaultZone: http//localhost:8761/eureka
+  

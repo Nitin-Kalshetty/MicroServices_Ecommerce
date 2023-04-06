@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ApiGatewayApplication",
+            "request": "launch",
+            "mainClass": "com.ecom_fin.gateway.ApiGatewayApplication"
+        },
+        {
+            "type": "java",
             "name": "ServiceRegistryApplication",
             "request": "launch",
             "mainClass": "com.ecom_fin.serviceRegistry.ServiceRegistryApplication",
