@@ -25,13 +25,16 @@ spring:
         uri: lb://CART-SERVICE
         predicates:
         - Path=/carts/**
+        
+  config:
+      import: configserver:http://localhost:8885
 
 
-eureka:
-    instance:
-      prefer-ip-address: true
-    client:
-      fetch-registry: true
-      register-with-eureka: true
-      service-url:
-        defaultZone: http//localhost:8761/eureka
+#eureka:
+#    instance:
+#      prefer-ip-address: true
+#    client:
+#      fetch-registry: true
+#      register-with-eureka: true
+#      service-url:
+#        defaultZone: http//localhost:8761/eureka

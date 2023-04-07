@@ -24,6 +24,11 @@ public class CartServiceImpl implements CartService{
 
 	@Override
 	public Cart saveCart(Cart cart) {
+		Cart check = cartRepository.findByUserId(cart.getUserId());
+		if(check!=null) {
+			throw new CartException("there is already a user with this Id : "+cart.getUserId()+" and it is not a valid way to create.");
+		}
+
 		return cartRepository.save(cart);
 	}
 
@@ -38,6 +43,7 @@ public class CartServiceImpl implements CartService{
 		if(cart==null) {
 			throw new CartException("there is no user with this Id : "+userId);
 		}
+		System.out.println(cart);
 		return cart;
 	}
 
@@ -47,7 +53,7 @@ public class CartServiceImpl implements CartService{
 		if(cart==null) {
 			throw new CartException("Not a valid userId...");
 		}
-
+		System.out.print(cart);
 		boolean checkingIsProductAlreadyPresent = cart.getProducts().stream()
 				.anyMatch(pro -> pro.getProductId().equals(productId));
 		System.out.println(checkingIsProductAlreadyPresent);
