@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecom_fin.cart.exceptions.CartException;
+import com.ecom_fin.cart.external.ProductService;
 import com.ecom_fin.cart.models.Cart;
 import com.ecom_fin.cart.models.Product;
 import com.ecom_fin.cart.repositories.CartRepository;
@@ -21,6 +22,9 @@ public class CartServiceImpl implements CartService{
 	
 	@Autowired
 	private CartRepository cartRepository;
+
+	@Autowired
+	private ProductService productService;
 
 	@Override
 	public Cart saveCart(Cart cart) {
@@ -60,10 +64,12 @@ public class CartServiceImpl implements CartService{
 		if(checkingIsProductAlreadyPresent) {
 			throw new CartException("Already this product is in cart So please if want another product you can add quantity.");
 		}
-		 ResponseEntity<Product> productResp = restTemplate.getForEntity("http://PRODUCT-SERVICE/products/"+productId, Product.class);
-		 Product product = productResp.getBody();
-		// Product product1 = restTemplate.getForObject("http://PRODUCT_SERVICE/product/"+productId, Product.class);	
-		// System.out.println(product);
+		// System.out.println("I am working above template");
+		//  ResponseEntity<Product> productResp = restTemplate.getForEntity("http://PRODUCT-SERVICE/products/"+productId, Product.class);
+		//  Product product = productResp.getBody();
+		// Product product1 = restTemplate.getForObject("http://PRODUCT-SERVICE/products/"+productId, Product.class);	
+		// System.out.println(product1);
+		Product product = productService.getProductById(productId);
 		cart.getProducts().add(product);
 		return cartRepository.save(cart);
 		

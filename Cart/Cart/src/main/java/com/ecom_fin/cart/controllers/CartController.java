@@ -39,7 +39,7 @@ public class CartController {
 		return new ResponseEntity<Cart>(cartService.getCartByUserId(userId),HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/add")
+	@PostMapping("/add")
 	public ResponseEntity<Cart> addProductToCartControllerHandler(@RequestParam String userId,@RequestParam String productId){
 		return new ResponseEntity<>(cartService.addProductToCart(userId, productId),HttpStatus.ACCEPTED);
 	}

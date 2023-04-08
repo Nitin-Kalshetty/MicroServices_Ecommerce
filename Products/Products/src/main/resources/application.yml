@@ -19,8 +19,8 @@ spring :
         
         
 #        
-    config:
-      import: configserver:http://localhost:8885
+    # config:
+    #   import: configserver:http://localhost:8885
         
         
 #        

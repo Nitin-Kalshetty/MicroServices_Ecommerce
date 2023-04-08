@@ -9,10 +9,13 @@ spring:
       uri: mongodb://localhost:27017
       database: microservices
       
-  config:
-      import: configserver:http://localhost:8885
+#  config:
+#      import: configserver:http://localhost:8885
   
-
+okta:
+  oauth2:
+    issuer: https://dev-33886824.okta.com/oauth2/default
+    audience: api://default
 
 
 #
@@ -22,7 +25,7 @@ spring:
 #      prefer-ip-address: true
 #    client:
 #      fetch-registry: true
-#      register-with-eureka: true
-#      service-url:
+##      service-url:
 #        defaultZone: http//localhost:8761/eureka
-#  
+#        register-with-eureka: true
+

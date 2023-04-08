@@ -4,7 +4,7 @@ package com.ecom_fin.cart.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.mongodb.core.index.Indexed;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 

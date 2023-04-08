@@ -14,8 +14,28 @@
       hibernate:
         ddl-auto: update
       show-sql: true
-    config:
-      import: configserver:http://localhost:8885
+
+
+    security:
+      oauth2: 
+        resourceserver:
+          jwt:
+            issuer-uri: https://dev-33886824.okta.com/oauth2/default
+        client:
+          registration:
+            internal-client:
+              provider: okta
+              authorization-grant-type: client_credentials
+              scope: internal
+              client-id: 0oa91i7ox4tYjsPHB5d7
+              client-secret: z-FmE0Y0ITdtWf7ZSMmXS2N0awwVdvH9PGsNpG7g
+          provider:
+            okta:
+              issuer-uri: https://dev-33886824.okta.com/oauth2/default
+
+
+    # config:
+    #   import: configserver:http://localhost:8885
     
 
 
@@ -48,6 +68,26 @@
           permitted-number-of-calls-in-half-open-state: 3
           sliding-window-size: 10
           sliding-window-type: count-based
+
+
+
+
+
+okta:
+  oauth2:
+    issuer: https://dev-33886824.okta.com/oauth2/default
+    audience: api://default
+    # client-id: 0oa91i7ox4tYjsPHB5d7
+    # client-secret: z-FmE0Y0ITdtWf7ZSMmXS2N0awwVdvH9PGsNpG7g
+    # scopes: openid, profile, email, offline_access
+
+
+
+
+
+
+
+
 
 
 
