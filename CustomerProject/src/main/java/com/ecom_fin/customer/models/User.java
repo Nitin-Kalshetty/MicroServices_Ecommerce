@@ -2,6 +2,9 @@ package com.ecom_fin.customer.models;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -25,11 +28,15 @@ public class User {
 
     private String name;
 
+    @Column(unique = true)
     private String email;
 
-    @Column(length = 10)
+    @Column(unique = true,length = 10)
     private String mobile;
+
+    private String role;
     
+    @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
     
     @Transient

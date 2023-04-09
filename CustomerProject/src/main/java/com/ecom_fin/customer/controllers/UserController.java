@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ecom_fin.customer.models.User;
+import com.ecom_fin.customer.repositories.UserRepository;
 import com.ecom_fin.customer.sevices.UserService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -23,6 +26,9 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @PostMapping
     @CircuitBreaker(name="CB-CART")
@@ -47,6 +53,15 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<User>> getAllUsersControllerHandler(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.ACCEPTED);
+    }
+
+
+
+    @GetMapping("/signIn")
+    public ResponseEntity<User> getLoggedInCustomerDetailsHandler(Authentication auth){
+        User user = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new BadCredentialsException("Wrong Credentials"));
+		return new ResponseEntity<User>(user,HttpStatus.ACCEPTED);
+
     }
 
 

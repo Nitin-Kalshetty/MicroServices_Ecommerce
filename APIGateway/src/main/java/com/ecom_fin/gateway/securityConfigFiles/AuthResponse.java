@@ -1,4 +1,4 @@
-package com.ecom_fin.gateway.securityModel;
+package com.ecom_fin.gateway.securityConfigFiles;
 
 import java.util.Collection;
 
