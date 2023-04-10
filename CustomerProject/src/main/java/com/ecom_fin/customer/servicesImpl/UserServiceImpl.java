@@ -6,13 +6,14 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecom_fin.customer.execptions.UserException;
 import com.ecom_fin.customer.external.services.CartService;
 import com.ecom_fin.customer.models.Cart;
-import com.ecom_fin.customer.models.User;
+import com.ecom_fin.customer.models.Users;
 import com.ecom_fin.customer.repositories.UserRepository;
 import com.ecom_fin.customer.sevices.UserService;
 
@@ -26,6 +27,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     
     @Autowired
@@ -34,25 +38,26 @@ public class UserServiceImpl implements UserService{
     private Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public User saveUser(User user) {
+    public Users saveUser(Users user) {
         String randUID = UUID.randomUUID().toString();
         user.setUserId(randUID);
         Cart cart = new Cart();
         cart.setUserId(randUID);
         Cart added_cart = cartService.addCart(cart);
         user.setCart(added_cart);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userRepo.findAll();
     }
 
     @Override
-    public User getUser(String userId) {
+    public Users getUser(String userId) {
         // return userRepo.findById(userId);
-        User user = userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
+        Users user = userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
         
         // using REST TEMPLATE
 

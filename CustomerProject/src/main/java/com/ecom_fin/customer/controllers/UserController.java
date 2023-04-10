@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecom_fin.customer.models.User;
+import com.ecom_fin.customer.models.Users;
 import com.ecom_fin.customer.repositories.UserRepository;
 import com.ecom_fin.customer.sevices.UserService;
 
@@ -32,35 +32,35 @@ public class UserController {
 
     @PostMapping
     @CircuitBreaker(name="CB-CART")
-    public ResponseEntity<User> saveUserControllerHandler(@RequestBody User user){
+    public ResponseEntity<Users> saveUserControllerHandler(@RequestBody Users user){
         return new ResponseEntity<>(userService.saveUser(user),HttpStatus.CREATED);
     }
 
     @GetMapping("/{userId}")
     @CircuitBreaker(name="CB-CART-PRODUCT",fallbackMethod = "cartProductFallBack")
-    public ResponseEntity<User> getUserByIdControllerHandler(@PathVariable String userId){
+    public ResponseEntity<Users> getUserByIdControllerHandler(@PathVariable String userId){
         return new ResponseEntity<>(userService.getUser(userId),HttpStatus.ACCEPTED);
     }
     
     // cartProductFallBack method for Circuit Breaker
     
-    public ResponseEntity<User> cartProductFallBack(String userId,Exception ex){
-    	User user = User.builder().email("dummy@email.com").name("Dummy").mobile("7878787878")
+    public ResponseEntity<Users> cartProductFallBack(String userId,Exception ex){
+    	Users user = Users.builder().email("dummy@email.com").name("Dummy").mobile("7878787878")
     	.password("password").build();
     	return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsersControllerHandler(){
+    public ResponseEntity<List<Users>> getAllUsersControllerHandler(){
         return new ResponseEntity<>(userService.getAllUsers(),HttpStatus.ACCEPTED);
     }
 
 
 
     @GetMapping("/signIn")
-    public ResponseEntity<User> getLoggedInCustomerDetailsHandler(Authentication auth){
-        User user = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new BadCredentialsException("Wrong Credentials"));
-		return new ResponseEntity<User>(user,HttpStatus.ACCEPTED);
+    public ResponseEntity<Users> getLoggedInCustomerDetailsHandler(Authentication auth){
+        Users user = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new BadCredentialsException("Wrong Credentials"));
+		return new ResponseEntity<Users>(user,HttpStatus.ACCEPTED);
 
     }
 

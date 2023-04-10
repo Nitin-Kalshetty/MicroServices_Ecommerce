@@ -7,6 +7,9 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.ecom_fin.customer.external.securityConfig.services.JwtTokenGeneratorFilter;
 
 @Configuration
 public class securityJWTconfig {
@@ -20,7 +23,8 @@ public class securityJWTconfig {
         .anyRequest()
         .authenticated()
         .and()
-        .addFilterBefore(new JwtTokenValidatorFilter(), null)
+        .addFilterAfter(new JwtTokenGeneratorFilter(),BasicAuthenticationFilter.class)
+        .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
         .formLogin()
         .and()
         .httpBasic();

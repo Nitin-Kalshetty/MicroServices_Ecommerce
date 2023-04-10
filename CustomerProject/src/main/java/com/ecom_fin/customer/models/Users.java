@@ -21,7 +21,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 @Entity
-public class User {
+public class Users {
     
     @Id
     private String userId;

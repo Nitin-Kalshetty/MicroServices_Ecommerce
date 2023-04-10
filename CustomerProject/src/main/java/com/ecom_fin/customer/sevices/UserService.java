@@ -2,14 +2,14 @@ package com.ecom_fin.customer.sevices;
 
 import java.util.List;
 
-import com.ecom_fin.customer.models.User;
+import com.ecom_fin.customer.models.Users;
 
 public interface UserService {
 
-    User saveUser(User user);
+    Users saveUser(Users user);
 
-    List<User> getAllUsers();
+    List<Users> getAllUsers();
 
-    User getUser(String userId);
+    Users getUser(String userId);
     
 }

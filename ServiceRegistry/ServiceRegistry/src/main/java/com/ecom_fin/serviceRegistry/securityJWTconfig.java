@@ -22,6 +22,7 @@ public class securityJWTconfig {
         .anyRequest()
         .authenticated()
         .and()
+        .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
         .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
         .formLogin()
         .and()
