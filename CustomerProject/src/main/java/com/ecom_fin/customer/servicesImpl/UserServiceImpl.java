@@ -6,7 +6,6 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -25,11 +24,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepo;
 
-    @Autowired
-    private CartService cartService;
+    // @Autowired
+    // private CartService cartService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
     
     
     @Autowired
@@ -39,14 +36,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Users saveUser(Users user) {
-        System.out.println(user);
+        System.out.println("User Save Repo method");
         String randUID = UUID.randomUUID().toString();
         user.setUserId(randUID);
         // Cart cart = new Cart();
         // cart.setUserId(randUID);
         // Cart added_cart = cartService.addCart(cart);
         // user.setCart(added_cart);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
@@ -77,12 +73,12 @@ public class UserServiceImpl implements UserService{
 
         // USING FEIGN CLIENT
         
-        try{
-        Cart cart =  cartService.getCartByUserId(userId);
-        user.setCart(cart);
-        }catch(Exception e){
-            System.out.println("Not added any products to cart...");
-        }
+        // try{
+        // Cart cart =  cartService.getCartByUserId(userId);
+        // user.setCart(cart);
+        // }catch(Exception e){
+        //     System.out.println("Not added any products to cart...");
+        // }
 
         
        

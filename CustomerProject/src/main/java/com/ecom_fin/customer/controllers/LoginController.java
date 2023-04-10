@@ -19,7 +19,7 @@ public class LoginController {
 
     @GetMapping("/signIn")
 	public ResponseEntity<Users> getLoggedInCustomerDetailsHandler(Authentication auth){
-		System.out.println(auth);
+		System.out.println("auth"+auth);
 		Users user = userRepository.findByEmail(auth.getName()).orElseThrow(() -> new BadCredentialsException("Wrong Credentials"));
 		return new ResponseEntity<>(user,HttpStatus.ACCEPTED);
 	}

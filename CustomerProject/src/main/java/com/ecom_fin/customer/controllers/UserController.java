@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +27,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private UserRepository userRepository;
 
     @PostMapping("/add")
     public ResponseEntity<Users> saveUserControllerHandler(@RequestBody Users user){
+        user.setRole("ROLE_" + user.getRole().toUpperCase());
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
         System.out.println(user);
         return new ResponseEntity<>(userService.saveUser(user),HttpStatus.CREATED);
     }
