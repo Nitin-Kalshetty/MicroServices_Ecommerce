@@ -28,4 +28,5 @@ public class GlobalExceptionHanlder {
         map.put("timeStamp",LocalDateTime.now());
         return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
     }
+
 }

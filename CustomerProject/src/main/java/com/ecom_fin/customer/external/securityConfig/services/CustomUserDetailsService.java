@@ -17,21 +17,22 @@ import com.ecom_fin.customer.models.Users;
 import com.ecom_fin.customer.repositories.UserRepository;
 
 public class CustomUserDetailsService implements UserDetailsService{
-
+    
     @Autowired
     private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Users> opt = userRepository.findByEmail(username);
-		if(opt.isEmpty()) {
-			throw new BadCredentialsException("User Details not found with this email : "+username);
-		}
-		Users user = opt.get();
-		List<GrantedAuthority> authorities = new ArrayList<>();
-		SimpleGrantedAuthority sga = new SimpleGrantedAuthority(user.getRole());
-		authorities.add(sga);
-		return new User(user.getEmail(),user.getPassword(),authorities);
+            Optional<Users> opt = userRepository.findByEmail(username);
+		   if(opt.isEmpty()) {
+		 	throw new BadCredentialsException("User Details not found with this email : "+username);  
+		 }
+		     Users user = opt.get();
+		 List<GrantedAuthority> authorities = new ArrayList<>();
+		 SimpleGrantedAuthority sga = new SimpleGrantedAuthority(user.getRole());
+		 authorities.add(sga);
+		 return new User(user.getEmail(),user.getPassword(),authorities);
     }
-    
+
+
 }

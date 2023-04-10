@@ -21,6 +21,4 @@ public class CustomerProjectApplication {
 		return new RestTemplate();
 	}
 
-	
-
 }

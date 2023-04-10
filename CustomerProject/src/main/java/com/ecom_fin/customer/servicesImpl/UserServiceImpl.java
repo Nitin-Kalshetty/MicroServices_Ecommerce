@@ -39,12 +39,13 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Users saveUser(Users user) {
+        System.out.println(user);
         String randUID = UUID.randomUUID().toString();
         user.setUserId(randUID);
-        Cart cart = new Cart();
-        cart.setUserId(randUID);
-        Cart added_cart = cartService.addCart(cart);
-        user.setCart(added_cart);
+        // Cart cart = new Cart();
+        // cart.setUserId(randUID);
+        // Cart added_cart = cartService.addCart(cart);
+        // user.setCart(added_cart);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }

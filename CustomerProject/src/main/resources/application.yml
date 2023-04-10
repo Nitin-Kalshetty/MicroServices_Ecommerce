@@ -16,10 +16,7 @@
       hibernate:
         ddl-auto: update
       show-sql: true
-    security:
-        user:
-          name: nitin
-          password: nitin
+  
 
 
   resilience4j:
