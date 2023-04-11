@@ -6,25 +6,25 @@ spring:
   application:
     name: API-GATEWAY
 
-  # cloud:
-  #   gateway:
-  #     routes:
-  #     - id: USER-SERVICE 
-  #       uri: lb://USER-SERVICE
-  #       predicates:
-  #       - Path=/users/**
+  cloud:
+    gateway:
+      routes:
+      - id: USER-SERVICE 
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/users/**
 
       
-  #     - id: PRODUCT-SERVICE
-  #       uri: lb://PRODUCT-SERVICE
-  #       predicates:
-  #       - Path=/products/**
+      - id: PRODUCT-SERVICE
+        uri: lb://PRODUCT-SERVICE
+        predicates:
+        - Path=/products/**
 
 
-  #     - id: CART-SERVICE
-  #       uri: lb://CART-SERVICE
-  #       predicates:
-  #       - Path=/carts/**
+      - id: CART-SERVICE
+        uri: lb://CART-SERVICE
+        predicates:
+        - Path=/carts/**
 
 
 

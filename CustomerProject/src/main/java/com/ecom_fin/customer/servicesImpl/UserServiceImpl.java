@@ -39,10 +39,10 @@ public class UserServiceImpl implements UserService{
         System.out.println("User Save Repo method");
         String randUID = UUID.randomUUID().toString();
         user.setUserId(randUID);
-        // Cart cart = new Cart();
-        // cart.setUserId(randUID);
-        // Cart added_cart = cartService.addCart(cart);
-        // user.setCart(added_cart);
+        Cart cart = new Cart();
+        cart.setUserId(randUID);
+        Cart added_cart = cartService.addCart(cart);
+        user.setCart(added_cart);
         return userRepo.save(user);
     }
 
@@ -73,12 +73,12 @@ public class UserServiceImpl implements UserService{
 
         // USING FEIGN CLIENT
         
-        // try{
-        // Cart cart =  cartService.getCartByUserId(userId);
-        // user.setCart(cart);
-        // }catch(Exception e){
-        //     System.out.println("Not added any products to cart...");
-        // }
+        try{
+        Cart cart =  cartService.getCartByUserId(userId);
+        user.setCart(cart);
+        }catch(Exception e){
+            System.out.println("Not added any products to cart...");
+        }
 
         
        

@@ -1,5 +1,6 @@
 package com.ecom_fin.products.servicesImpl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService{
     public Product saveProduct(Product product) {
         String UID = UUID.randomUUID().toString();
         product.setProductId(UID);
+        product.setProduct_added(LocalDateTime.now());
         return productRepo.save(product);
     }
 
