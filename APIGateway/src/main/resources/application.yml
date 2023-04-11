@@ -6,38 +6,38 @@ spring:
   application:
     name: API-GATEWAY
 
-  cloud:
-    gateway:
-      routes:
-      - id: USER-SERVICE 
-        uri: lb://USER-SERVICE
-        predicates:
-        - Path=/users/**
+  # cloud:
+  #   gateway:
+  #     routes:
+  #     - id: USER-SERVICE 
+  #       uri: lb://USER-SERVICE
+  #       predicates:
+  #       - Path=/users/**
 
       
-      - id: PRODUCT-SERVICE
-        uri: lb://PRODUCT-SERVICE
-        predicates:
-        - Path=/products/**
+  #     - id: PRODUCT-SERVICE
+  #       uri: lb://PRODUCT-SERVICE
+  #       predicates:
+  #       - Path=/products/**
 
 
-      - id: CART-SERVICE
-        uri: lb://CART-SERVICE
-        predicates:
-        - Path=/carts/**
+  #     - id: CART-SERVICE
+  #       uri: lb://CART-SERVICE
+  #       predicates:
+  #       - Path=/carts/**
 
 
 
 
 #okta config 
 
-okta:
-  oauth2:
-    issuer: https://dev-33886824.okta.com/oauth2/default
-    audience: api://default
-    client-id: 0oa91i7ox4tYjsPHB5d7
-    client-secret: z-FmE0Y0ITdtWf7ZSMmXS2N0awwVdvH9PGsNpG7g
-    scopes: openid, profile, email, offline_access
+# okta:
+#   oauth2:
+#     issuer: https://dev-33886824.okta.com/oauth2/default
+#     audience: api://default
+#     client-id: 0oa91i7ox4tYjsPHB5d7
+#     client-secret: z-FmE0Y0ITdtWf7ZSMmXS2N0awwVdvH9PGsNpG7g
+#     scopes: openid, profile, email, offline_access
 
 
 

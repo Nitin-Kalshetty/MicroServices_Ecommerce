@@ -8,6 +8,11 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017
       database: microservices
+
+  security:
+      user:
+        name: nitin
+        password: nitin
       
 #  config:
 #      import: configserver:http://localhost:8885

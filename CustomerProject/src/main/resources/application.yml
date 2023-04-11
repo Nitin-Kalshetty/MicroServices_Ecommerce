@@ -16,7 +16,20 @@
       hibernate:
         ddl-auto: update
       show-sql: true
-  
+   
+    # cloud:
+    #   gateway:
+    #     routes:
+    #     - id: PRODUCT-SERVICE
+    #       uri: lb://PRODUCT-SERVICE
+    #       predicates:
+    #       - Path=/products/**
+
+
+    #     - id: CART-SERVICE
+    #       uri: lb://CART-SERVICE
+    #       predicates:
+    #       - Path=/carts/**
 
 
   resilience4j:
