@@ -2,28 +2,38 @@ package com.rockerBank.details.servicesImpl;
 
 import java.time.LocalDate;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.rockerBank.details.exceptions.AccountHolderException;
 import com.rockerBank.details.exceptions.InsufficientBalance;
+import com.rockerBank.details.externals.models.Users;
+// import com.rockerBank.details.externals.services.UserService;
 import com.rockerBank.details.models.AccountHolders;
 import com.rockerBank.details.repositories.AccountHolderRepository;
 import com.rockerBank.details.services.AccountHolderService;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class AccountHolderServiceImpl implements AccountHolderService{
 
     @Autowired
     private AccountHolderRepository accountRepo;
 
+    // @Autowired
+    // private UserService userService;
+
     @Override
     public AccountHolders creaAccountHolder(AccountHolders account,String userId) {
+        String randomUID = UUID.randomUUID().toString();
+        account.setAccountNumber(randomUID);
         account.setIfsc_code("ROCKER3851");
         account.setAccountCreated(LocalDate.now());
         account.setUserId(userId);
-        account.setBalance(0L);
+        account.setBalance(500L);
         String pan = account.getPancard();
         if(pan.equals("") || pan.equals(" ")) account.setPancard("NA");
         return accountRepo.save(account);
@@ -31,7 +41,8 @@ public class AccountHolderServiceImpl implements AccountHolderService{
 
     @Override
     public AccountHolders getAccountHolderByUserId(String UserId) {
-        return accountRepo.findByUserId(UserId).orElseThrow(() -> new AccountHolderException("Invalid userId..."));
+       return accountRepo.findByUserId(UserId).orElseThrow( () -> new AccountHolderException("No user register account with "+ UserId));
+        
     }
 
     @Override
@@ -98,6 +109,28 @@ public class AccountHolderServiceImpl implements AccountHolderService{
                 accountRepo.save(receiver);
                 return sender;
         
+    }
+
+    @Override
+    public String confirmNameBeforeSendingAmount(String username, String password, String receiverId) {
+                Optional<AccountHolders> opt = accountRepo.findById(username);
+
+                AccountHolders sender = null;
+                if(opt.isPresent()){
+                    sender = opt.get();
+                }else{
+                    sender = accountRepo.findByBankingUsername(username).orElseThrow( () -> new AccountHolderException("No user is registered with this Id : "+username) );
+                }
+
+                Optional<AccountHolders> opt1 = accountRepo.findById(username);
+                AccountHolders receiver = null;
+                if(opt1.isPresent()){
+                    receiver = opt.get();
+                }else{
+                    receiver = accountRepo.findByBankingUsername(username).orElseThrow( () -> new AccountHolderException("No user is registered with this Id : "+username) );
+                }
+
+                return receiver.getUserId();
     }
 
   

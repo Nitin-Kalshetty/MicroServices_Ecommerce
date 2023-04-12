@@ -16,8 +16,12 @@ public interface AccountHolderService {
 
     public AccountHolders addAmountToAccount(String creditCardNumber,String cvv,Integer expiryMonth,Integer expiryYear,Integer balance,String username,String password);
 
+    public String confirmNameBeforeSendingAmount(String username,String password,String receiverId);
+
     public AccountHolders transferBalanceFromOneAccountToAnother(String username,String password,Integer sendingAmount,
                                                                 String receiverId);
+
+
 
 
 }

@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "RockerBankApplication",
+            "request": "launch",
+            "mainClass": "com.rockerBank.details.RockerBankApplication",
+            "projectName": "RockerBank"
+        },
+        {
+            "type": "java",
             "name": "ConfigServerApplication",
             "request": "launch",
             "mainClass": "com.ecom_fin.ConfigServer.ConfigServerApplication",

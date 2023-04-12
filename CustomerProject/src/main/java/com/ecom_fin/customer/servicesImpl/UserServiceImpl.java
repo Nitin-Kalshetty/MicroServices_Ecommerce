@@ -1,22 +1,23 @@
 package com.ecom_fin.customer.servicesImpl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import com.ecom_fin.customer.execptions.UserException;
+import com.ecom_fin.customer.external.services.AccountHolderService;
 import com.ecom_fin.customer.external.services.CartService;
 import com.ecom_fin.customer.models.Cart;
 import com.ecom_fin.customer.models.Users;
 import com.ecom_fin.customer.repositories.UserRepository;
 import com.ecom_fin.customer.sevices.UserService;
-
-
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -27,7 +28,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private CartService cartService;
 
-    
+    @Autowired
+    private AccountHolderService accountService;
+
     
     @Autowired
     private RestTemplate restTemplate;
@@ -35,20 +38,34 @@ public class UserServiceImpl implements UserService{
     private Logger logger= LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public Users saveUser(Users user) {
+    public Users saveUser(Users user)  {
         System.out.println("User Save Repo method");
-        String randUID = UUID.randomUUID().toString();
-        user.setUserId(randUID);
+        String randomUID = UUID.randomUUID().toString();
+        user.setUserId(randomUID);
+        Users user1 =  userRepo.save(user);
         Cart cart = new Cart();
-        cart.setUserId(randUID);
+        cart.setUserId(randomUID);
         Cart added_cart = cartService.addCart(cart);
         user.setCart(added_cart);
-        return userRepo.save(user);
+        accountService.creaAccountHolder(user.getAccountholder(), randomUID);
+        return user1;
     }
 
     @Override
     public List<Users> getAllUsers() {
-        return userRepo.findAll();
+
+        List<Cart> carts = cartService.getAllCarts();
+        List<Users> users = userRepo.findAll();
+
+        Map<String, Cart> cartMap = carts.stream().collect(Collectors.toMap(Cart::getUserId, Function.identity()));
+        return users.stream().map(user -> {
+                    Cart cart = cartMap.get(user.getUserId());
+                    if (cart != null) {
+                        user.setCart(cart);
+                    }
+                    return user;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -68,8 +85,6 @@ public class UserServiceImpl implements UserService{
         //         System.out.println("Not added any products to cart...");
         // }
         
-        
-                
 
         // USING FEIGN CLIENT
         
@@ -80,9 +95,12 @@ public class UserServiceImpl implements UserService{
             System.out.println("Not added any products to cart...");
         }
 
-        
-       
         return user;
+    }
+
+    @Override
+    public Users getUserByAccount(String userId) {
+        return userRepo.findById(userId).orElseThrow( () -> new UserException("User not found with Id : "+userId) );
     }
     
 }

@@ -20,7 +20,6 @@ import com.ecom_fin.customer.repositories.UserRepository;
 import com.ecom_fin.customer.sevices.UserService;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/users")
@@ -28,7 +27,6 @@ public class UserController {
     
     @Autowired
     private UserService userService;
-
     
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -72,6 +70,10 @@ public class UserController {
 	}
 
 
+    @GetMapping("/account/{userId}")
+    public ResponseEntity<Users> getUserByIdWithAccountControllerHandler(@PathVariable String userId){
+        return new ResponseEntity<>(userService.getUserByAccount(userId),HttpStatus.ACCEPTED);
+    }
 
 
 }

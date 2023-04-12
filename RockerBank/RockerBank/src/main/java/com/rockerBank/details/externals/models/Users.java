@@ -1,5 +1,6 @@
-package com.ecom_fin.customer.models;
+package com.rockerBank.details.externals.models;
 
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -7,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,9 +38,4 @@ public class Users {
     @JsonProperty(access = Access.WRITE_ONLY)
     private String password;
     
-    @Transient
-    private Cart cart;
-
-    @Transient
-    private AccountHolders accountholder;
 }
