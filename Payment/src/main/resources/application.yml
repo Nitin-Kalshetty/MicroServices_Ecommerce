@@ -1,0 +1,11 @@
+server: 
+    port: 8886
+
+
+spring:
+  application:
+    name: CREDIT-CARDS
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017
+      database: microservices

@@ -1,0 +1,42 @@
+ServiceRegistry : 
+        server.port : 8761
+
+
+Users : 
+    server.port : 8881
+    database : mysql
+    url : jdbc:mysql://localhost:3306/microservices
+
+
+
+Products :
+    server.port : 8882
+    database : postgres
+    url : jdbc:postgresql://localhost:5432/microservices
+
+
+
+Cart : 
+     server.port : 8883
+     database :  mongodb    
+        uri : mongodb://localhost:27017
+
+
+
+ApiGateway : 
+        server.port : 8884
+
+
+
+
+RockerBank : 
+    server.port : 8885
+    database : mysql
+    url : jdbc:mysql://localhost:3306/microservices
+
+
+
+Payment : 
+    server.port : 8886
+    database : mongodb
+    uri : mongodb://localhost:27017
